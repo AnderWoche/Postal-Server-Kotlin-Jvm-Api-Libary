@@ -1,13 +1,13 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
     id 'java-library'
+    id 'maven-publish'
 }
 
 group 'de.moldiy'
 version '1.0'
 
 repositories {
-    mavenCentral()
     mavenCentral()
 }
 
@@ -19,4 +19,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'de.moldiy'
+            artifactId = 'postal'
+            version = '1.0'
+
+            from components.java
+        }
+    }
 }
