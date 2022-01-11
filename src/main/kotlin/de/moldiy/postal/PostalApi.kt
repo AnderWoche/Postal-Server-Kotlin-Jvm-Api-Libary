@@ -1,6 +1,7 @@
 package de.moldiy.postal
 
 import com.google.gson.Gson
+import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.ConnectException
@@ -46,10 +47,15 @@ class PostalApi(val ip: String, val key: String) {
 
         connection.connect()
 
+        val responseString: String = try {
+            val reader = InputStreamReader(connection.inputStream)
+            reader.readText()
+        } catch (e: IOException) {
+            val reader = InputStreamReader(connection.errorStream)
+            reader.readText()
+        }
 
-        val reader = InputStreamReader(connection.inputStream)
-        val responseString = reader.readText()
-
+        println(responseString)
 
         return this.gson.fromJson(responseString, PostalResponseBody::class.java)
     }

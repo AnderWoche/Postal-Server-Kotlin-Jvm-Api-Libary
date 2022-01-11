@@ -8,7 +8,9 @@ class PostalResponseBody {
         @SerializedName("success")
         SUCCESS,
         @SerializedName("error")
-        ERROR
+        ERROR,
+        @SerializedName("invalid-json")
+        INVALID_JSON
     }
 
     @SerializedName("status")
@@ -18,8 +20,31 @@ class PostalResponseBody {
     var time: Double = 0.0
 
     @SerializedName("flags")
-    var flags: Array<String> = emptyArray()
+    var flags: Any? = null
 
     @SerializedName("data")
-    var data: Array<Any> = emptyArray()
+    var data: Data? = null
+
+    @SerializedName("details")
+    var details: String = ""
+
+    class Data {
+
+        enum class Code {
+            @SerializedName("NoContent")
+            NO_CONTENT,
+            @SerializedName("FromAddressMissing")
+            FORM_ADDRESS_MISSING
+        }
+
+        @SerializedName("message_id")
+        var message_id: String? = null
+
+        @SerializedName("code")
+        var code: Code? = null
+
+        @SerializedName("message")
+        var message: String? = null
+
+    }
 }
